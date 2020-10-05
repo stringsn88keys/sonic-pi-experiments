@@ -28,10 +28,9 @@ def rhythm_pattern_1 notes
 end
 
 def cap_pattern_1 notes
-  play notes[0], release: 1.00
-  sleep 1
-  play notes[1], release: 0.50
-  sleep 1
+  play_length notes[0], 1.00
+  play_length notes[1], 0.50
+  sleep 0.5
 end
 
 
@@ -65,20 +64,16 @@ end
 
 def rhythm_pattern_2 notes
   notes.shift(3).each do |note|
-    play note, release: 0.11
-    sleep 0.11
+    play_length note, 0.11
   end
-  play notes.shift, release: 0.33
-  sleep 0.33
-  play notes.shift, release: 0.33
-  sleep 0.34
+  play_length notes.shift, 0.33
+  play_length notes.shift, 0.34
+  
   
   notes.shift(2).each do |note|
-    play note, release: 0.33
-    sleep 0.33
+    play_length note, 0.33
   end
-  play notes.shift, release: 0.33
-  sleep 0.34
+  play_length notes.shift, 0.34
 end
 
 
@@ -104,10 +99,8 @@ in_thread do
   sync :variation_2
   with_synth :dpulse do
     2.times do
-      play :E5, release: 4
-      sleep 4.0
-      play :G5, release: 4
-      sleep 4.0
+      play_length :E5, 4
+      play_length :G5, 4
       sleep 8.0
     end
     
@@ -116,27 +109,22 @@ end
 
 def variation_2_sixteeths_w_grace notes
   notes.shift(4).each do |note|
-    play note, release: 0.25
-    sleep 0.25
+    play_length note, 0.25
   end
   notes.shift(2).each do |note|
-    play note, release: 0.125
-    sleep 0.125
+    play_length note, 0.125
   end
   notes.each do |note|
-    play note, release: 0.25
-    sleep 0.25
+    play_length note, 0.25
   end
 end
 
 
 def variation_2_sixteeths_w_eighths notes
   notes.shift(4).each do |note|
-    play note, release: 0.25
-    sleep 0.25
+    play_length note, 0.25
   end
-  play note.shift, release: 0.125
-  sleep 0.125
+  play_length note.shift, 0.125
 end
 
 def variation_2_sixteeths_w_end_cap notes
