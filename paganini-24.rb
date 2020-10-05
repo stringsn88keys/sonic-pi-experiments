@@ -94,20 +94,7 @@ def play_variation_1
   cap_pattern_1 [:A4, :A3]
 end
 
-
-in_thread do
-  sync :variation_2
-  with_synth :dpulse do
-    2.times do
-      play_length :E5, 4
-      play_length :G5, 4
-      sleep 8.0
-    end
-    
-  end
-end
-
-def variation_2_sixteeths_w_grace notes
+def variation_2_sixteenths_w_grace notes
   notes.shift(4).each do |note|
     play_length note, 0.25
   end
@@ -120,17 +107,51 @@ def variation_2_sixteeths_w_grace notes
 end
 
 
-def variation_2_sixteeths_w_eighths notes
+def variation_2_sixteenths_w_eighths notes
   notes.shift(4).each do |note|
     play_length note, 0.25
   end
-  play_length note.shift, 0.125
+  play_length notes.shift, 0.125
+  play_length notes.shift, 0.375
+  play_length notes.shift, 0.5
 end
 
-def variation_2_sixteeths_w_end_cap notes
+def variation_2_sixteenths_w_end_cap notes
+  notes.shift(6).each do |note|
+    play_length note, 0.25
+  end
+  play_length notes.shift, 0.5
+  sleep 0.5
 end
 
 def play_variation_2
+  2.times do
+    variation_2_sixteenths_w_grace [:A4, :Gs4, :A4, :Gs4, :Bf4, :A4, :B4, :C5, :D5]
+    variation_2_sixteenths_w_grace [:E5, :Ds5, :E5, :Ds5, :F5, :E5, :D5, :C5, :B4]
+    variation_2_sixteenths_w_grace [:A4, :Gs4, :A4, :Gs4, :Bf4, :A4, :B4, :C5, :D5]
+    variation_2_sixteenths_w_eighths [:E5, :Ds5, :E5, :Ds5, :F5, :E5, :E4]
+  end
+  variation_2_sixteenths_w_grace [:A5, :Gs5, :A5, :Gs5, :Bf5, :A5, :G5, :F5, :E5]
+  variation_2_sixteenths_w_grace [:D5, :Cs5, :D5, :Cs5, :Ef5, :D5, :E5, :F5, :D5]
+  variation_2_sixteenths_w_grace [:G5, :Fs5, :G5, :Fs5, :Af5, :G5, :F5, :E5, :D5]
+  variation_2_sixteenths_w_grace [:C5, :B4, :C5, :B4, :Df5, :C5, :D5, :E5, :C5]
+  variation_2_sixteenths_w_grace [:F5, :E5, :F5, :E5, :G5, :F5, :D5, :C5, :B4]
+  variation_2_sixteenths_w_grace [:E5, :Ds5, :E5, :Ds5, :F5, :E5, :C5, :B4, :A4]
+  variation_2_sixteenths_w_grace [:B4, :As4, :B4, :As4, :C5, :B4, :F5, :E5, :Gs4]
+  variation_2_sixteenths_w_end_cap [:A4, :Gs4, :A4, :Gs4, :B4, :A4]
+end
+
+in_thread do
+  sync :variation_2
+  with_synth :dpulse do
+    2.times do
+      play_length :E5, 2
+      play_length :G5, 2
+      sleep 4.0
+    end
+    sleep 14.0
+    play_length :D4, 2
+  end
 end
 
 
@@ -139,7 +160,7 @@ in_thread do
     play_theme
     sync :the_beat
     play_variation_1
-    cue :variation_2
+    # cue :variation_2 bad engraving?
     play_variation_2
     set :continueplay, 0
   end
