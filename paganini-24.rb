@@ -1,22 +1,29 @@
 stretch_factor = 140.0/(16*60/(sample_duration :loop_amen_full))
 new_length = stretch_factor * (sample_duration :loop_amen_full)
 
+set :continueplay, 1
+use_bpm 140
 in_thread do
   loop do
-    
+    print "loop"
     sample :loop_amen_full, rate: stretch_factor
-    sleep new_length
+    sleep 16 # new_length
     cue :the_beat
+    stop if get(:continueplay) == 0
   end
 end
 
+def play_length note, length
+  play note, release: length
+  sleep length
+end
+
 def rhythm_pattern_1 notes
-  play notes.shift, release: 0.50
-  sleep 0.75
+  play_length notes.shift, 0.50
+  sleep 0.25
   
   notes.each do |note|
-    play note, release: 0.25
-    sleep 0.25
+    play_length note, 0.25
   end
 end
 
@@ -94,16 +101,65 @@ end
 
 
 in_thread do
-  loop do
-    use_bpm 140
-    with_synth :saw do
-      play_theme
-      sync :the_beat
-      play_variation_1
+  sync :variation_2
+  with_synth :dpulse do
+    2.times do
+      play :E5, release: 4
+      sleep 4.0
+      play :G5, release: 4
+      sleep 4.0
+      sleep 8.0
     end
+    
   end
-  sync
 end
+
+def variation_2_sixteeths_w_grace notes
+  notes.shift(4).each do |note|
+    play note, release: 0.25
+    sleep 0.25
+  end
+  notes.shift(2).each do |note|
+    play note, release: 0.125
+    sleep 0.125
+  end
+  notes.each do |note|
+    play note, release: 0.25
+    sleep 0.25
+  end
+end
+
+
+def variation_2_sixteeths_w_eighths notes
+  notes.shift(4).each do |note|
+    play note, release: 0.25
+    sleep 0.25
+  end
+  play note.shift, release: 0.125
+  sleep 0.125
+end
+
+def variation_2_sixteeths_w_end_cap notes
+end
+
+def play_variation_2
+end
+
+
+in_thread do
+  with_synth :piano do
+    play_theme
+    sync :the_beat
+    play_variation_1
+    cue :variation_2
+    play_variation_2
+    set :continueplay, 0
+  end
+end
+
+
+
+
 
 
 
