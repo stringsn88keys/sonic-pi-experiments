@@ -141,27 +141,52 @@ def play_variation_2
   variation_2_sixteenths_w_end_cap [:A4, :Gs4, :A4, :Gs4, :B4, :A4]
 end
 
-in_thread do
-  sync :variation_2
-  with_synth :dpulse do
-    2.times do
-      play_length :E5, 2
-      play_length :G5, 2
-      sleep 4.0
-    end
-    sleep 14.0
-    play_length :D4, 2
+def play_tuples tuples_array
+  tuples_array.each do |tuple|
+    play_length tuple[0], tuple[1]
   end
 end
 
+def play_variation_3_voice_2
+  2.times do
+    play_tuples [[:C4, 1.5], [:A3, 0.5], [:B3, 0.5], [:B3, 0.5], [:E4, 1]]
+    play_tuples [[:C4, 1.5], [:A3, 0.5], [:B3, 0.5], [:Ds4, 0.5], [:F4, 0.5], [:E4, 0.5]]
+  end
+  play_tuples [[:A4, 1.5], [:Cs4, 0.5], [:D4, 0.5], [:E4, 0.5], [:F4, 0.5], [:Fs4, 0.5]]
+  play_tuples [[:G4, 1.5], [:B3, 0.5], [:C4, 0.5], [:D4, 0.5], [:Ds4, 0.5], [:E4, 0.5]]
+  play_tuples [[:F4, 1.5], [:B3, 0.5], [:E4, 1.5], [:A3, 0.5]]
+  play_tuples [[:B3, 0.5], [:F4, 0.5], [:E4, 0.5], [:Gs3, 0.5], [:B3, 1.0], [:A3, 0.5]]
+  sleep 0.5
+end
+
+
+in_thread do
+  sync :voice_2_var_3
+  play_variation_3_voice_2
+end
+
+def play_variation_3
+  cue :voice_2_var_3
+  2.times do
+    play_tuples [[:A4, 1.5], [:A4, 0.5], [:Gs4, 0.5], [:B4, 0.5], [:E5, 1]]
+    play_tuples [[:C5, 1.5], [:A4, 0.5], [:B4, 0.5], [:Ds5, 0.5], [:F5, 0.5], [:E5, 0.5]]
+  end
+  play_tuples [[:A5, 1.5], [:Cs5, 0.5], [:D5, 0.5], [:E5, 0.5], [:F5, 0.5], [:Fs5, 0.5]]
+  play_tuples [[:G5, 1.5], [:B4, 0.5], [:C5, 0.5], [:D5, 0.5], [:Ds5, 0.5], [:E5, 0.5]]
+  play_tuples [[:F5, 1.5], [:B4, 0.5], [:E5, 1.5], [:A4, 0.5]]
+  play_tuples [[:B4, 0.5], [:F5, 0.5], [:E5, 0.5], [:Gs4, 0.5], [:B4, 1.0], [:A4, 0.5]]
+  sleep 0.5
+end
 
 in_thread do
   with_synth :piano do
     play_theme
     sync :the_beat
     play_variation_1
-    # cue :variation_2 bad engraving?
+    sync :the_beat
     play_variation_2
+    sync :the_beat
+    play_variation_3
     set :continueplay, 0
   end
 end
