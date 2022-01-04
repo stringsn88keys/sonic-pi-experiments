@@ -32,6 +32,17 @@ end
 @third_motif_alt2=%i[d4 a4 g4 f4 d4 f4 g4 a4 a3 a3 g3 a3 bb3 c4 d4 d4]
 @third_motif_alt2_rhythm=[4,2,2,1,1,1,1,2,1,1,0.5,0.5,0.5,0.5,2,2]
 
+@fourth_motif_sopran1=%i[f5 d5 d5 d5 d5 cs5 a4 d5 cs5 d5]
+@fourth_motif_sopran1_rhythm=[1, 2, 2, 3, 1, 0.5, 0.5, 2, 1, 4]
+
+@zu_den_bergen_sopran1=%i[a4 a4 d5 e5 f5 g5 a5 a5] +
+  [nil] + %i[a4 a4 a4 b4 c5 d5 e5 f5 e5 d5] +
+  [nil] + %i[d5 a5 b4 g4 c5 b4 a4 b4 c5 c5 c5 c5 d5 e5 f5 d5 g5 f5 e5 d5]
+
+@zu_den_bergen_sopran1_rhythm=[1, 1, 1.5, 0.5, 1.5, 0.5, 2, 2] +
+  [2] + [1,1,1.5,0.5,1.5,0.5,1,1,2,2] +
+  [1] + [0.5, 0.5, 0.5, 0.5, 1.5, 0.25, 0.25, 1, 2, 1, 1,1,0.5,0.5,3,1,3,1,2,8]
+
 def play_with_rhythm(notes, rhythm)
   notes.zip(rhythm).each do |pair|
     play_length pair[0], pair[1]
@@ -51,6 +62,10 @@ def sopran1
     play_with_rhythm(@second_motif, @second_motif_rhythm) # fourth beat of measure 5
     sleep 4
     play_with_rhythm(@third_motif_sopran1, @third_motif_sopran1_rhythm) # third beat of measure 8
+    sleep 3
+    play_with_rhythm(@fourth_motif_sopran1, @fourth_motif_sopran1_rhythm) # end of measure 10
+    sleep 5
+    play_with_rhythm(@zu_den_bergen_sopran1, @zu_den_bergen_sopran1_rhythm) # end of measure 18
   end
 end
 
